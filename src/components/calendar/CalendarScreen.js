@@ -9,6 +9,8 @@ import { CalendarEvent } from "./CalendarEvent";
 import { CalendarModal } from "./CalendarModal";
 import { useDispatch } from "react-redux";
 import { uiOpenModal } from "../../actions/ui";
+import { eventSetActive } from "../../actions/events";
+import { AddNewFab } from "../ui/AddNewFab";
 
 const localizer = momentLocalizer(moment); // or globalizeLocalizer
 moment.locale("es");
@@ -40,7 +42,9 @@ export const CalendarScreen = () => {
   };
 
   const onSelectEvent = (e) => {
-    console.log(e);
+    /*  console.log(e); */
+    dispatch(eventSetActive(e));
+    dispatch(uiOpenModal());
   };
 
   const onViewChange = (e) => {
@@ -82,7 +86,8 @@ export const CalendarScreen = () => {
         onView={onViewChange}
         view={lastView}
       />
-      <CalendarModal></CalendarModal>
+      <AddNewFab />
+      <CalendarModal />
     </div>
   );
 };
