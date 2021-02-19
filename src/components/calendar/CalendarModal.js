@@ -6,6 +6,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { uiCloseModal } from "../../actions/ui";
+import { eventAddNew } from "../../actions/events";
 
 const customStyles = {
   content: {
@@ -74,7 +75,7 @@ export const CalendarModal = () => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log(formValues);
+    /*  console.log(formValues); */
 
     const startDate = moment(start);
     const endDate = moment(end);
@@ -92,8 +93,18 @@ export const CalendarModal = () => {
     }
 
     /* TODO: Connection to DB */
-    setTitleValid(true);
+    dispatch(
+      eventAddNew({
+        ...formValues,
+        id: new Date().getTime(),
+        user: {
+          _id: "1234567",
+          name: "Emanuel Hardwell",
+        },
+      })
+    );
 
+    setTitleValid(true);
     closeModal();
   };
 
