@@ -1,3 +1,4 @@
+import { covertDates } from "../helpers/convertDates";
 import { fetchConToken } from "../helpers/fetch";
 import { types } from "../types/types";
 
@@ -15,11 +16,12 @@ export const eventStartAddNew = (event) => {
       const body = await res.json();
 
       if (body.ok) {
-        event.id = body.event.id;
+        event.id = body.evento.id;
         event.user = {
           _id: uid,
           name: name,
         };
+        console.log(event);
         dispath(eventAddNew(event));
       }
     } catch (error) {
@@ -44,4 +46,23 @@ export const eventUpdated = (event) => ({
 
 export const eventDeleted = () => ({
   type: types.eventDeleted,
+});
+
+export const eventStartLoading = () => {
+  return async (dispath) => {
+    try {
+      const res = await fetchConToken("event");
+      const body = await res.json();
+
+      const event = covertDates(body.events);
+      dispath(eventLoaded(event));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const eventLoaded = (event) => ({
+  type: types.eventLoaded,
+  payload: event,
 });
