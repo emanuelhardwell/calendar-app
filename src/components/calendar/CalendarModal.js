@@ -10,6 +10,7 @@ import {
   eventAddNew,
   eventClearActiveEvent,
   eventStartAddNew,
+  eventStartUpdate,
   eventUpdated,
 } from "../../actions/events";
 
@@ -114,7 +115,7 @@ export const CalendarModal = () => {
     /* TODO: Connection to DB */
 
     if (activeEvent) {
-      dispatch(eventUpdated(formValues));
+      dispatch(eventStartUpdate(formValues));
     } else {
       dispatch(eventStartAddNew(formValues));
     }

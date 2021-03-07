@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { covertDates } from "../helpers/convertDates";
 import { fetchConToken } from "../helpers/fetch";
 import { types } from "../types/types";
@@ -39,11 +40,6 @@ export const eventClearActiveEvent = () => ({
   type: types.eventClearActiveEvent,
 });
 
-export const eventUpdated = (event) => ({
-  type: types.eventUpdated,
-  payload: event,
-});
-
 export const eventDeleted = () => ({
   type: types.eventDeleted,
 });
@@ -64,5 +60,27 @@ export const eventStartLoading = () => {
 
 const eventLoaded = (event) => ({
   type: types.eventLoaded,
+  payload: event,
+});
+
+export const eventStartUpdate = (event) => {
+  return async (dispath) => {
+    try {
+      const res = await fetchConToken(`event/${event.id}`, event, "PUT");
+      const body = await res.json();
+
+      if (body.ok) {
+        dispath(eventUpdated(event));
+      } else {
+        Swal.fire("Error", body.msg, "error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const eventUpdated = (event) => ({
+  type: types.eventUpdated,
   payload: event,
 });
