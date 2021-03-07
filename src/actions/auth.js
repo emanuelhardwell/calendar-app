@@ -58,7 +58,7 @@ export const startChecking = () => {
     const res = await fetchConToken("auth/renew");
     const body = await res.json();
     /* console.log(body);
- */
+     */
     if (body.ok) {
       localStorage.setItem("token", body.token);
       localStorage.setItem("token-init-date", new Date().getTime());
@@ -75,6 +75,18 @@ export const startChecking = () => {
     }
   };
 };
+
+/* -------------------------------- start Logout  -------------------------------- */
+export const startLogout = () => {
+  return (dispath) => {
+    localStorage.clear();
+    dispath(logout());
+  };
+};
+
+const logout = () => ({
+  type: types.authLogout,
+});
 
 const checkingFinish = () => ({
   type: types.authCheckingFinish,
