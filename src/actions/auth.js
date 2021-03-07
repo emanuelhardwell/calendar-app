@@ -1,7 +1,7 @@
 /*  */
 
 import Swal from "sweetalert2";
-import { fetchSinToken } from "../helpers/fetch";
+import { fetchConToken, fetchSinToken } from "../helpers/fetch";
 import { types } from "../types/types";
 
 /* -------------------------------- start Login -------------------------------- */
@@ -51,6 +51,34 @@ export const startRegister = (name, email, password) => {
     }
   };
 };
+
+/* -------------------------------- start Checking  -------------------------------- */
+export const startChecking = () => {
+  return async (dispath) => {
+    const res = await fetchConToken("auth/renew");
+    const body = await res.json();
+    console.log(body);
+
+    if (body.ok) {
+      localStorage.setItem("token", body.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
+
+      dispath(
+        login({
+          uid: body.uid,
+          name: body.name,
+        })
+      );
+    } else {
+      Swal.fire("Error", body.msg, "error");
+      dispath(checkingFinish);
+    }
+  };
+};
+
+const checkingFinish = () => ({
+  type: types.authCheckingFinish,
+});
 
 const login = (user) => ({
   type: types.authLogin,
