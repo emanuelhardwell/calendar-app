@@ -57,8 +57,8 @@ export const startChecking = () => {
   return async (dispath) => {
     const res = await fetchConToken("auth/renew");
     const body = await res.json();
-    console.log(body);
-
+    /* console.log(body);
+ */
     if (body.ok) {
       localStorage.setItem("token", body.token);
       localStorage.setItem("token-init-date", new Date().getTime());
@@ -70,7 +70,7 @@ export const startChecking = () => {
         })
       );
     } else {
-      Swal.fire("Error", body.msg, "error");
+      /* Swal.fire("Error", body.msg, "error"); */
       dispath(checkingFinish);
     }
   };
