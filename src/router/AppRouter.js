@@ -23,7 +23,7 @@ export const AppRouter = () => {
   const { checking, uid } = useSelector((state) => state.auth);
 
   if (checking) {
-    return <h5>Loading .....</h5>;
+    <h5>Loading .....</h5>;
   }
 
   return (
