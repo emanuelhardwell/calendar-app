@@ -16,14 +16,13 @@ import { PublicRoute } from "./PublicRoute";
 export const AppRouter = () => {
   const dispatch = useDispatch();
 
+  const { checking, uid } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(startChecking());
   }, [dispatch]);
 
-  const { checking, uid } = useSelector((state) => state.auth);
-
   if (checking) {
-    <h5>Loading .....</h5>;
+    return <h5>Loading .....</h5>;
   }
 
   return (

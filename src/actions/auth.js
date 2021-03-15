@@ -72,7 +72,7 @@ export const startChecking = () => {
       );
     } else {
       /* Swal.fire("Error", body.msg, "error"); */
-      dispath(checkingFinish);
+      dispath(checkingFinish());
     }
   };
 };
